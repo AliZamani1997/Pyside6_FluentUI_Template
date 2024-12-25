@@ -16,25 +16,53 @@
 
 import os
 import sys
-
+import sys
+import os
+from PySide6.QtCore import QProcess
+from PySide6.QtQuick import QQuickWindow,QSGRendererInterface
+from PySide6.QtNetwork import QNetworkProxy
+from PySide6.QtGui import QGuiApplication
+from PySide6.QtQml import QQmlApplicationEngine
+import FluentUI
+from helper.SettingsHelper import SettingsHelper
+from AppInfo import AppInfo
+# 注册资源以及自定义的QML组件
+import example_rc 
+from component.CircularReveal import CircularReveal
+from component.FileWatcher import FileWatcher
+from component.FpsItem import FpsItem
+import app.helper.Log as Log
 
 class StartUp:
     """Necessary steps for environment, Python and Qt"""
 
     @staticmethod
     def configure_qt_application_data():
+        
+        Log.setup(AppInfo().name)
+        # SettingsHelper().init()
+        QQuickWindow.setGraphicsApi(QSGRendererInterface.GraphicsApi.OpenGL)
+        os.environ["QT_QUICK_CONTROLS_STYLE"] = "Basic"
+
+        app = QGuiApplication(sys.argv)
+        engine = QQmlApplicationEngine()
+        # rootContext = engine.rootContext()
+        # rootContext.setContextProperty("SettingsHelper", SettingsHelper())
+        # rootContext.setContextProperty("AppInfo", AppInfo())
+        FluentUI.init(engine)
+        
         from PySide6.QtCore import QCoreApplication
-        QCoreApplication.setApplicationName("app name")
-        QCoreApplication.setApplicationVersion("app version")
-        QCoreApplication.setOrganizationName("org name")
-        QCoreApplication.setOrganizationDomain("https://zhuzichu520.github.io")
+        QCoreApplication.setApplicationName(AppInfo.name)
+        QCoreApplication.setApplicationVersion(AppInfo.version)
+        QCoreApplication.setOrganizationName(AppInfo.orgName)
+        QCoreApplication.setOrganizationDomain(AppInfo.orgDomain)
 
 
-    @staticmethod
-    def configure_environment_variables():
-        # Qt expects "qtquickcontrols2.conf" at root level, but the way we handle resources does not allow that.
-        # So we need to override the path here
-        os.environ["QT_QUICK_CONTROLS_CONF"] = ":/data/qtquickcontrols2.conf"
+    # @staticmethod
+    # def configure_environment_variables():
+    #     # Qt expects "qtquickcontrols2.conf" at root level, but the way we handle resources does not allow that.
+    #     # So we need to override the path here
+    #     os.environ["QT_QUICK_CONTROLS_CONF"] = ":/data/qtquickcontrols2.conf"
 
     @staticmethod
     def import_resources():
@@ -46,8 +74,8 @@ class StartUp:
 
     @staticmethod
     def start_application():
-        from app.application import MyApplication
-        app = MyApplication(sys.argv)
+        from app.application import Application
+        app = Application(sys.argv)
 
         app.set_window_icon()
         app.set_up_contexts()
@@ -57,19 +85,31 @@ class StartUp:
         app.set_up_window_effects()
         app.verify()
 
-        sys.exit(app.exec())
+        return app
+ 
+ 
+    @staticmethod
+    def exec_handler(app):
+        exec = app.exec()
+        if(exec == 931):
+            args = QGuiApplication.arguments()[1:]
+            QProcess.startDetached(QGuiApplication.applicationFilePath(),args)
+        # return exec
+        sys.exit(exec)
 
 
 def perform_startup():
     we = StartUp()
 
     we.configure_qt_application_data()
-    we.configure_environment_variables()
+    # we.configure_environment_variables()
 
     we.import_resources()
     we.import_bindings()
 
-    we.start_application()
+    app = we.start_application()
+
+    we.exec_handler(app)
 
 
 
