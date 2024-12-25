@@ -1,0 +1,20 @@
+PySide6_Essentials>=6.8.1
+PySide6-FluentUI-QML>=1.6.7
+pytest>=8.3.4
+pywin32>=308 ; sys_platform >= 'win32'
+cx_Freeze>=7.2.7
+pyinstaller>=6.11.1
+## The following requirements were added by pip freeze:
+altgraph>=0.17.4
+colorama>=0.4.6
+cx_Logging>=3.2.1
+iniconfig>=2.0.0
+lief>=0.15.1
+packaging>=24.2
+pefile>=2023.2.7
+pluggy>=1.5.0
+pyinstaller-hooks-contrib>=2024.10
+PySide6>=6.8.1
+PySide6_Addons>=6.8.1
+pywin32-ctypes>=0.2.3
+shiboken6>=6.8.1
