@@ -24,13 +24,14 @@ from PySide6.QtNetwork import QNetworkProxy
 from PySide6.QtGui import QGuiApplication
 from PySide6.QtQml import QQmlApplicationEngine
 import FluentUI
-from helper.SettingsHelper import SettingsHelper
-from AppInfo import AppInfo
+from app.helper.SettingsHelper import SettingsHelper
+from app.AppInfo import AppInfo
+from app.application import Application
 # 注册资源以及自定义的QML组件
-import example_rc 
-from component.CircularReveal import CircularReveal
-from component.FileWatcher import FileWatcher
-from component.FpsItem import FpsItem
+# import example_rc 
+# from component.CircularReveal import CircularReveal
+# from component.FileWatcher import FileWatcher
+# from component.FpsItem import FpsItem
 import app.helper.Log as Log
 
 class StartUp:
@@ -38,31 +39,30 @@ class StartUp:
 
     @staticmethod
     def configure_qt_application_data():
-        
-        Log.setup(AppInfo().name)
+        appInfo=AppInfo()
+        Log.setup(appInfo.name)
         # SettingsHelper().init()
         QQuickWindow.setGraphicsApi(QSGRendererInterface.GraphicsApi.OpenGL)
-        os.environ["QT_QUICK_CONTROLS_STYLE"] = "Basic"
+        # os.environ["QT_QUICK_CONTROLS_STYLE"] = "Basic"
 
-        app = QGuiApplication(sys.argv)
-        engine = QQmlApplicationEngine()
-        # rootContext = engine.rootContext()
-        # rootContext.setContextProperty("SettingsHelper", SettingsHelper())
-        # rootContext.setContextProperty("AppInfo", AppInfo())
-        FluentUI.init(engine)
+        # app = QGuiApplication(sys.argv)
+        # engine = QQmlApplicationEngine()
+        # # rootContext = engine.rootContext()
+        # # rootContext.setContextProperty("SettingsHelper", SettingsHelper())
+        # # rootContext.setContextProperty("AppInfo", appInfo)
         
         from PySide6.QtCore import QCoreApplication
-        QCoreApplication.setApplicationName(AppInfo.name)
-        QCoreApplication.setApplicationVersion(AppInfo.version)
-        QCoreApplication.setOrganizationName(AppInfo.orgName)
-        QCoreApplication.setOrganizationDomain(AppInfo.orgDomain)
+        QCoreApplication.setApplicationName(appInfo.name)
+        QCoreApplication.setApplicationVersion(appInfo.version)
+        QCoreApplication.setOrganizationName(appInfo.orgName)
+        QCoreApplication.setOrganizationDomain(appInfo.orgDomain)
 
 
     # @staticmethod
     # def configure_environment_variables():
     #     # Qt expects "qtquickcontrols2.conf" at root level, but the way we handle resources does not allow that.
     #     # So we need to override the path here
-    #     os.environ["QT_QUICK_CONTROLS_CONF"] = ":/data/qtquickcontrols2.conf"
+    #     os.environ["QT_QUICK_CONTROLS_CONF"] = "qrc:/qtquickcontrols2.conf"
 
     @staticmethod
     def import_resources():
@@ -70,11 +70,10 @@ class StartUp:
 
     @staticmethod
     def import_bindings():
-        import app.pyobjects  # noqa: F401
+        import app.PyQmlElements  # noqa: F401
 
     @staticmethod
     def start_application():
-        from app.application import Application
         app = Application(sys.argv)
 
         app.set_window_icon()
@@ -89,7 +88,11 @@ class StartUp:
  
  
     @staticmethod
-    def exec_handler(app):
+    def start_fluent(engine:QQmlApplicationEngine):
+        FluentUI.init(engine)
+
+    @staticmethod
+    def exec_handler(app:Application):
         exec = app.exec()
         if(exec == 931):
             args = QGuiApplication.arguments()[1:]
@@ -108,6 +111,8 @@ def perform_startup():
     we.import_bindings()
 
     app = we.start_application()
+
+    we.start_fluent(app._engine)
 
     we.exec_handler(app)
 

@@ -4,15 +4,17 @@ from PySide6.QtCore import QObject, Signal, Property, Slot
 from app.utils.define import Singleton
 import importlib
 
+
 ApplicationName = "OTH Suite"
 ApplicationVersion = "1.0.0"
 OrganizationName = "OTH"
 OrganizationDomain = "https://www.oth.com"
 
 
-
 @Singleton
 class AppInfo(QObject):
+    
+
     infoChanged = Signal()
     @Property(str, notify=infoChanged)
     def name(self):

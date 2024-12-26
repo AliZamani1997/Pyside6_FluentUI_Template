@@ -2,7 +2,11 @@ import os
 import subprocess  
 import argparse  
 
-def create_ts_file(lupdate_path, qml_source, output_ts_file):  
+Lupdate_Path=""
+Output_Ts_File=""
+Qml_Source=""
+
+def create_ts_file(lupdate_path=Lupdate_Path, qml_source=Qml_Source, output_ts_file=Output_Ts_File):  
     # Check if the provided lupdate path exists  
     if not os.path.exists(lupdate_path):  
         print(f"Error: The lupdate executable at '{lupdate_path}' does not exist.")  
@@ -28,7 +32,9 @@ def main():
     args = parser.parse_args()  
 
     # Create .ts file from QML  
-    create_ts_file(args.lupdate, args.qml_source, args.output_ts_file)  
+    create_ts_file(args.lupdate, args.qmldir, args.o)  
 
 if __name__ == '__main__':  
     main()
+else:
+    pass

@@ -38,7 +38,7 @@ def main():
     args = parser.parse_args()  
 
     # Convert .ts files to .qm  
-    convert_ts_to_qm(args.lrelease, args.ts_directory, args.output_directory)  
+    convert_ts_to_qm(args.lrelease, args.tsdir, args.o)  
 
 if __name__ == '__main__':  
     main()

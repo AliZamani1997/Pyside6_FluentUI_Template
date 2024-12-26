@@ -3,7 +3,7 @@
 from PySide6.QtCore import QDir, qInstallMessageHandler, QFile, QTextStream,QtMsgType,QStandardPaths,QDateTime,qDebug,QSysInfo
 import sys
 import threading
-from AppInfo import AppInfo
+from app.AppInfo import AppInfo
 import os
 
 QT_ENDL = "\n"
@@ -96,7 +96,7 @@ def setup(app):
     qInstallMessageHandler(myMessageHandler)
     qDebug(f"===================================================")
     qDebug(f"[AppName] {g_app}")
-    qDebug(f"[AppVersion] {AppInfo()._version}")
+    qDebug(f"[AppVersion] {AppInfo().version}")
     qDebug(f"[ProcessId] {os.getpid()}")
     qDebug(f"[DeviceInfo]")
     qDebug(f"  [DeviceId] {QSysInfo.machineUniqueId()}")

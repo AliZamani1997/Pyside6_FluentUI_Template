@@ -22,6 +22,9 @@ from PySide6.QtGui import QGuiApplication, QIcon
 from PySide6.QtQml import QQmlApplicationEngine
 
 
+from app.helper.SettingsHelper import SettingsHelper
+from app.AppInfo import AppInfo
+
 class Application(QGuiApplication):
 
     def __init__(self, args):
@@ -80,12 +83,13 @@ class Application(QGuiApplication):
         self._engine.load(qml_file)
 
     def set_up_window_effects(self):
-        if sys.platform == "win32":
-            hwnd = self.topLevelWindows()[0].winId()
-            from app.framelesswindow.win import WindowsWindowEffect
-            self._effects = WindowsWindowEffect()
-            self._effects.addShadowEffect(hwnd)
-            self._effects.addWindowAnimation(hwnd)
+        pass
+        # if sys.platform == "win32":
+        #     hwnd = self.topLevelWindows()[0].winId()
+        #     from app.framelesswindow.win import WindowsWindowEffect
+        #     self._effects = WindowsWindowEffect()
+        #     self._effects.addShadowEffect(hwnd)
+        #     self._effects.addWindowAnimation(hwnd)
 
     def verify(self):
         if not self._engine.rootObjects():
@@ -94,47 +98,47 @@ class Application(QGuiApplication):
 
 
 
-# This Python file uses the following encoding: utf-8
-import sys
-import os
-from PySide6.QtCore import QProcess
-from PySide6.QtQuick import QQuickWindow,QSGRendererInterface
-from PySide6.QtNetwork import QNetworkProxy
-from PySide6.QtGui import QGuiApplication
-from PySide6.QtQml import QQmlApplicationEngine
-import FluentUI
-from helper.SettingsHelper import SettingsHelper
-from AppInfo import AppInfo
-# 注册资源以及自定义的QML组件
-import example_rc 
-from component.CircularReveal import CircularReveal
-from component.FileWatcher import FileWatcher
-from component.FpsItem import FpsItem
-import app.helper.Log as Log
+# # This Python file uses the following encoding: utf-8
+# import sys
+# import os
+# from PySide6.QtCore import QProcess
+# from PySide6.QtQuick import QQuickWindow,QSGRendererInterface
+# from PySide6.QtNetwork import QNetworkProxy
+# from PySide6.QtGui import QGuiApplication
+# from PySide6.QtQml import QQmlApplicationEngine
+# import FluentUI
+# from helper.SettingsHelper import SettingsHelper
+# from AppInfo import AppInfo
+# # 注册资源以及自定义的QML组件
+# import example_rc 
+# from component.CircularReveal import CircularReveal
+# from component.FileWatcher import FileWatcher
+# from component.FpsItem import FpsItem
+# import app.helper.Log as Log
 
-def main():
-    Log.setup(AppInfo().name)
-    # SettingsHelper().init()
-    QQuickWindow.setGraphicsApi(QSGRendererInterface.GraphicsApi.OpenGL)
-    os.environ["QT_QUICK_CONTROLS_STYLE"] = "Basic"
+# def main():
+#     Log.setup(AppInfo().name)
+#     # SettingsHelper().init()
+#     QQuickWindow.setGraphicsApi(QSGRendererInterface.GraphicsApi.OpenGL)
+#     os.environ["QT_QUICK_CONTROLS_STYLE"] = "Basic"
 
-    app = QGuiApplication(sys.argv)
-    engine = QQmlApplicationEngine()
-    # rootContext = engine.rootContext()
-    # rootContext.setContextProperty("SettingsHelper", SettingsHelper())
-    # rootContext.setContextProperty("AppInfo", AppInfo())
-    FluentUI.init(engine)
-    print(engine.importPathList())
-    qml_file = "qrc:/qml/App.qml"
-    engine.load(qml_file)
-    if not engine.rootObjects():
-        sys.exit(-1)
-    exec = app.exec()
-    if(exec == 931):
-        #QGuiApplication.applicationFilePath()需要打包成exe后才能正确的路径重启，不然这个函数获取的路径是python的路径
-        args = QGuiApplication.arguments()[1:]
-        QProcess.startDetached(QGuiApplication.applicationFilePath(),args)
-    return exec
+#     app = QGuiApplication(sys.argv)
+#     engine = QQmlApplicationEngine()
+#     # rootContext = engine.rootContext()
+#     # rootContext.setContextProperty("SettingsHelper", SettingsHelper())
+#     # rootContext.setContextProperty("AppInfo", AppInfo())
+#     FluentUI.init(engine)
+#     print(engine.importPathList())
+#     qml_file = "qrc:/qml/App.qml"
+#     engine.load(qml_file)
+#     if not engine.rootObjects():
+#         sys.exit(-1)
+#     exec = app.exec()
+#     if(exec == 931):
+#         #QGuiApplication.applicationFilePath()需要打包成exe后才能正确的路径重启，不然这个函数获取的路径是python的路径
+#         args = QGuiApplication.arguments()[1:]
+#         QProcess.startDetached(QGuiApplication.applicationFilePath(),args)
+#     return exec
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()

@@ -14,6 +14,12 @@ def create_qrc_file(directory, qrc_file_path):
                 file_path = os.path.join(root, file)  
                 # Create a relative path for the resource file  
                 resource_path = os.path.relpath(file_path, directory)  
+                
+                resource_path=str(resource_path).replace("\\","/")
+                
+                if ".qrc" in resource_path :
+                    continue
+                
                 # Write the entry to the .qrc file  
                 qrc_file.write(f'    <file>{resource_path}</file>\n')  
 
