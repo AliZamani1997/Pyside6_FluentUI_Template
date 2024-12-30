@@ -4,7 +4,7 @@ import argparse
 def create_qrc_file(directory, qrc_file_path):  
     
     with open(qrc_file_path, 'w') as qrc_file:  
-        qrc_file.write('<RCC>\n')  
+        qrc_file.write('<!DOCTYPE RCC><RCC version="1.0">\n')  
         qrc_file.write('  <qresource prefix="/">\n')  
         
         # Walk through the resource directory  

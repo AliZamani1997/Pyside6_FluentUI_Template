@@ -75,7 +75,7 @@ class StartUp:
     @staticmethod
     def start_application():
         app = Application(sys.argv)
-
+        StartUp.start_fluent(app._engine)
         app.set_window_icon()
         app.set_up_contexts()
         app.set_up_signals()
@@ -104,15 +104,16 @@ class StartUp:
 def perform_startup():
     we = StartUp()
 
+    we.import_resources()
+    
     we.configure_qt_application_data()
     # we.configure_environment_variables()
 
-    we.import_resources()
     we.import_bindings()
 
     app = we.start_application()
 
-    we.start_fluent(app._engine)
+    # we.start_fluent(app._engine)
 
     we.exec_handler(app)
 

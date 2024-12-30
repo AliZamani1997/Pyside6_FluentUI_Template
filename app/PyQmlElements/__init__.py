@@ -1,2 +1,3 @@
 
-from . import *
+from . import example
+print("example add")

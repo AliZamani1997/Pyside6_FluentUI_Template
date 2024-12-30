@@ -18,6 +18,7 @@ from PySide6.QtCore import Property, QObject, Signal
 from PySide6.QtQml import QmlElement, QmlSingleton
 # from PySide6.QtQml import (QmlNamedElement)
 
+
 QML_IMPORT_NAME = "example"
 QML_IMPORT_MAJOR_VERSION = 1
 
@@ -31,3 +32,6 @@ class SingletonPyObject(QObject):
 
     exposed_property_changed = Signal(str)
     exposed_property = Property(str, get_exposed_property, notify=exposed_property_changed)
+
+
+print("SingletonPyObject add .")

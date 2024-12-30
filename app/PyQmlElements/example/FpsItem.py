@@ -42,3 +42,6 @@ class FpsItem(QQuickPaintedItem):
     def fps(self, val):
         self._fps = val
         self.fpsChanged.emit()
+
+
+print("FpsItem add .")

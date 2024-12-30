@@ -67,17 +67,18 @@ class Application(QGuiApplication):
         self.setLayoutDirection(locale.textDirection())
 
     def set_up_window_event_filter(self):
-        if platform.system() == "Windows":
-            from app.framelesswindow.win import WindowsEventFilter
-            self._event_filter = WindowsEventFilter(border_width=5)
-            self.installNativeEventFilter(self._event_filter)
-        elif platform.system() == "Linux":
-            from app.framelesswindow.linux import LinuxEventFilter
-            self._event_filter = LinuxEventFilter(border_width=5)
-            self.installEventFilter(self._event_filter)
+        pass
+        # if platform.system() == "Windows":
+        #     from app.framelesswindow.win import WindowsEventFilter
+        #     self._event_filter = WindowsEventFilter(border_width=5)
+        #     self.installNativeEventFilter(self._event_filter)
+        # elif platform.system() == "Linux":
+        #     from app.framelesswindow.linux import LinuxEventFilter
+        #     self._event_filter = LinuxEventFilter(border_width=5)
+        #     self.installEventFilter(self._event_filter)
 
     def start_engine(self):
-        self._engine.load(QUrl.fromLocalFile(":/qt/qml/main.qml"))
+        # self._engine.load(QUrl.fromLocalFile(":/qt/qml/main.qml"))
             
         qml_file = "qrc:/qml/App.qml"
         self._engine.load(qml_file)
