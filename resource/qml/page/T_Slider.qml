@@ -8,7 +8,7 @@ import FluentUI
 FluScrollablePage{
 
     title:"Slider"
-
+    launchMode:FluPageType.SingleInstance
     FluArea{
         Layout.fillWidth: true
         Layout.preferredHeight: 200

@@ -23,6 +23,14 @@ class SettingsHelper(QObject):
             return default
         return data
 
+    @Slot(result=str)
+    def getLanguage(self):
+        return str(self._get("language", "English"))
+
+    @Slot(str)
+    def saveLanguage(self, language:str):
+        self._save("language", language)
+
     @Slot(result=int)
     def getDarkMode(self):
         return int(self._get("darkMode", 0))

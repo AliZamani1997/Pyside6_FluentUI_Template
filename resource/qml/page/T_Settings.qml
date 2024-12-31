@@ -173,24 +173,38 @@ FluScrollablePage{
             }
 
             FluText{
-                text:Lang.locale
+                text: qsTr("Language") //Lang.locale
                 font: FluTextStyle.BodyStrong
                 Layout.bottomMargin: 4
             }
 
+            // Flow{
+            //     spacing: 5
+            //     Repeater{
+            //         model: Lang.__localeList
+            //         delegate: FluRadioButton{
+            //             checked: Lang.__locale === modelData
+            //             text:modelData
+            //             clickListener:function(){
+            //                 Lang.__locale = modelData
+            //             }
+            //         }
+            //     }
+            // }
             Flow{
                 spacing: 5
                 Repeater{
-                    model: Lang.__localeList
+                    model: LanguageServer.getLanguages()
                     delegate: FluRadioButton{
-                        checked: Lang.__locale === modelData
+                        checked: LanguageServer.currentLanguage === modelData
                         text:modelData
                         clickListener:function(){
-                            Lang.__locale = modelData
+                            LanguageServer.changeLanguage(modelData)
                         }
                     }
                 }
             }
+            
         }
     }
 }

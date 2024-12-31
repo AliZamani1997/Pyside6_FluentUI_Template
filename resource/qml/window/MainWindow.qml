@@ -12,7 +12,8 @@ import "qrc:///qml/viewmodel"
 FluWindow {
 
     id:window
-    title: "FluentUI"
+    title: AppInfo.name + " v%1".arg(AppInfo.version)
+    // AppInfo.name + AppInfo.version
     width: 960
     height: 600
     minimumWidth: 520
@@ -64,7 +65,7 @@ FluWindow {
     SystemTrayIcon {
         id:system_tray
         visible: true
-        icon.source: "qrc:/res/image/favicon.ico"
+        icon.source: "qrc:/images/favicon.ico"
         tooltip: "FluentUI"
         menu: Menu {
             MenuItem {
@@ -94,16 +95,16 @@ FluWindow {
 
     FluContentDialog{
         id:dialog_close
-        title:"退出"
-        message:"确定要退出程序吗？"
-        negativeText:"最小化"
+        title:qsTr("Quit")
+        message:qsTr("Are you sure you want to exit the program ?")
+        negativeText:qsTr("Minimize")
         buttonFlags: FluContentDialogType.NegativeButton | FluContentDialogType.NeutralButton | FluContentDialogType.PositiveButton
         onNegativeClicked: {
-            system_tray.showMessage("友情提示","FluentUI已隐藏至托盘,点击托盘可再次激活窗口");
+            system_tray.showMessage("App Name","hibernat App");
             timer_window_hide_delay.restart()
         }
-        positiveText:"退出"
-        neutralText:"取消"
+        positiveText:qsTr("Quit")
+        neutralText:qsTr("Cancle")
         onPositiveClicked:{
             FluApp.exit(0)
         }
@@ -206,8 +207,8 @@ FluWindow {
                     return FluTools.isMacos() ? 20 : 0
                 }
                 displayMode:viewmodel_settings.displayMode
-                logo: "qrc:/res/image/favicon.ico"
-                title:"FluentUI"
+                logo: "qrc:/images/favicon.ico"
+                title:window.title
                 onLogoClicked:{
                     clickCount += 1
                     showSuccess("点击%1次".arg(clickCount))

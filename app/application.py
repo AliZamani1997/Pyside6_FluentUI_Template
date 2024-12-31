@@ -23,15 +23,17 @@ from PySide6.QtQml import QQmlApplicationEngine
 
 
 from app.helper.SettingsHelper import SettingsHelper
-from app.AppInfo import AppInfo
-
+from app.helper.LanguageServer import LanguageServer
+from .AppInfo import AppInfo
 class Application(QGuiApplication):
 
     def __init__(self, args):
         super().__init__(args)
         self._engine = QQmlApplicationEngine()
-        self._translator_myapp = QTranslator()
-        self._translator_qt = QTranslator()
+        LanguageServer().init(self,self._engine)
+        # print(self._engine.uiLanguage())
+        # self._translator = QTranslator()
+        # self._translator_qt = QTranslator()
 
         self._event_filter = None
         self._effects = None
@@ -44,29 +46,31 @@ class Application(QGuiApplication):
         rootContext = self._engine.rootContext()
         rootContext.setContextProperty("SettingsHelper", SettingsHelper())
         rootContext.setContextProperty("AppInfo", AppInfo())
+        rootContext.setContextProperty("LanguageServer", LanguageServer())
 
     def set_up_signals(self):
         self.aboutToQuit.connect(self._on_quit)
-        self._engine.uiLanguageChanged.connect(self._retranslate)
 
     def _on_quit(self) -> None:
         del self._engine
 
     def _retranslate(self):
-        locale = QLocale(self._engine.uiLanguage())
+        pass
+        # locale = QLocale(self._engine.uiLanguage())
 
-        self.removeTranslator(self._translator_qt)
-        self.removeTranslator(self._translator_myapp)
+        # # self.removeTranslator(self._translator_qt)
+        # self.removeTranslator(self._translator)
 
-        self._translator_qt.load(locale, "qtbase", "_", QLibraryInfo.location(QLibraryInfo.LibraryPath.TranslationsPath))
-        self._translator_myapp.load(f":/i18n/{locale.name()}.qm")
+        # # self._translator_qt.load(locale, "qtbase", "_", QLibraryInfo.location(QLibraryInfo.LibraryPath.TranslationsPath))
+        # self._translator.load(f"qrc:/i18n/{locale.name()}.qm")
 
-        self.installTranslator(self._translator_qt)
-        self.installTranslator(self._translator_myapp)
+        # # self.installTranslator(self._translator_qt)
+        # self.installTranslator(self._translator)
 
-        self.setLayoutDirection(locale.textDirection())
+        # self.setLayoutDirection(locale.textDirection())
 
     def set_up_window_event_filter(self):
+
         pass
         # if platform.system() == "Windows":
         #     from app.framelesswindow.win import WindowsEventFilter

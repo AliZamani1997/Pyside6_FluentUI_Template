@@ -27,6 +27,8 @@ import FluentUI
 from app.helper.SettingsHelper import SettingsHelper
 from app.AppInfo import AppInfo
 from app.application import Application
+from PySide6.QtQuickControls2 import QQuickStyle
+
 # 注册资源以及自定义的QML组件
 # import example_rc 
 # from component.CircularReveal import CircularReveal
@@ -44,6 +46,7 @@ class StartUp:
         # SettingsHelper().init()
         QQuickWindow.setGraphicsApi(QSGRendererInterface.GraphicsApi.OpenGL)
         # os.environ["QT_QUICK_CONTROLS_STYLE"] = "Basic"
+        QQuickStyle.setStyle("Material")
 
         # app = QGuiApplication(sys.argv)
         # engine = QQmlApplicationEngine()

@@ -79,8 +79,7 @@
     <file>qml/window/SingleInstanceWindow.qml</file>
     <file>qml/window/SingleTaskWindow.qml</file>
     <file>qml/window/StandardWindow.qml</file>
-    <file>translate/en_UK.qm</file>
+    <file>translate/en_US.qm</file>
     <file>translate/fa_IR.qm</file>
-    <file>translate/fr_FR.qm</file>
   </qresource>
 </RCC>
