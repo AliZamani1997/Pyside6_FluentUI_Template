@@ -31,6 +31,26 @@ Item {
         FluApp.useSystemAppBar = SettingsHelper.getUseSystemAppBar()
         FluTheme.darkMode = SettingsHelper.getDarkMode()
         FluTheme.enableAnimation = true
+
+
+
+        // FluTheme.themeColor   FluColorSet
+
+        // FluTheme.primaryColor = "#ff00c8" 
+        // FluTheme.backgroundColor = "#8f0013"
+        // FluTheme.windowBackgroundColor = "#d6ff89"
+        // FluTheme.windowActiveBackgroundColor = "#b086ff"
+        // FluTheme.fontPrimaryColor = "#000000"
+        // FluTheme.fontSecondaryColor = "#000000"
+        // FluTheme.fontTertiaryColor = "#000000"
+
+        // FluTheme.itemNormalColor = "#ff0000"
+        // FluTheme.itemHoverColor = "#bbff00"
+        // FluTheme.itemPressColor = "#00e1ff"
+        // FluTheme.itemCheckColor = "#001aff"
+
+
+
         FluApp.routes = {
             "/":"qrc:/qml/window/MainWindow.qml",
             "/about":"qrc:/qml/window/AboutWindow.qml",

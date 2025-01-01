@@ -53,14 +53,14 @@ FluWindow {
         }
     }
 
-    Component.onCompleted: {
-        checkUpdate(true)
-        FluEventBus.registerEvent(event_checkupdate)
-    }
+    // Component.onCompleted: {
+    //     checkUpdate(true)
+    //     FluEventBus.registerEvent(event_checkupdate)
+    // }
 
-    Component.onDestruction: {
-        FluEventBus.unRegisterEvent(event_checkupdate)
-    }
+    // Component.onDestruction: {
+    //     FluEventBus.unRegisterEvent(event_checkupdate)
+    // }
 
     SystemTrayIcon {
         id:system_tray
@@ -319,73 +319,73 @@ FluWindow {
     //     }
     // }
 
-    FpsItem{
-        id:fps_item
-    }
+    // FpsItem{
+    //     id:fps_item
+    // }
 
-    FluText{
-        text:"fps %1".arg(fps_item.fps)
-        opacity: 0.3
-        anchors{
-            bottom: parent.bottom
-            right: parent.right
-            bottomMargin: 5
-            rightMargin: 5
-        }
-    }
+    // FluText{
+    //     text:"fps %1".arg(fps_item.fps)
+    //     opacity: 0.3
+    //     anchors{
+    //         bottom: parent.bottom
+    //         right: parent.right
+    //         bottomMargin: 5
+    //         rightMargin: 5
+    //     }
+    // }
 
-    FluContentDialog{
-        property string newVerson
-        property string body
-        id:dialog_update
-        title:"升级提示"
-        message:"FluentUI目前最新版本 "+ newVerson +" -- 当前应用版本 "+AppInfo.version+" \n现在是否去下载新版本？\n\n更新内容：\n"+body
-        buttonFlags: FluContentDialogType.NegativeButton | FluContentDialogType.PositiveButton
-        negativeText: "取消"
-        positiveText:"确定"
-        onPositiveClicked:{
-            Qt.openUrlExternally("https://github.com/zhuzichu520/FluentUI/releases/latest")
-        }
-    }
+    // FluContentDialog{
+    //     property string newVerson
+    //     property string body
+    //     id:dialog_update
+    //     title:"升级提示"
+    //     message:"FluentUI目前最新版本 "+ newVerson +" -- 当前应用版本 "+AppInfo.version+" \n现在是否去下载新版本？\n\n更新内容：\n"+body
+    //     buttonFlags: FluContentDialogType.NegativeButton | FluContentDialogType.PositiveButton
+    //     negativeText: "取消"
+    //     positiveText:"确定"
+    //     onPositiveClicked:{
+    //         Qt.openUrlExternally("https://github.com/zhuzichu520/FluentUI/releases/latest")
+    //     }
+    // }
 
-    FluNetworkCallable{
-        id:callable
-        property bool silent: true
-        onStart: {
-            console.debug("satrt check update...")
-        }
-        onFinish: {
-            console.debug("check update finish")
-            FluEventBus.post("checkUpdateFinish");
-        }
-        onSuccess:
-            (result)=>{
-                var data = JSON.parse(result)
-                console.debug("current version "+AppInfo.version)
-                console.debug("new version "+data.tag_name)
-                if(data.tag_name !== AppInfo.version){
-                    dialog_update.newVerson =  data.tag_name
-                    dialog_update.body = data.body
-                    dialog_update.open()
-                }else{
-                    if(!silent){
-                        showInfo("当前版本已经是最新版")
-                    }
-                }
-            }
-        onError:
-            (status,errorString)=>{
-                if(!silent){
-                    showError("网络异常!")
-                }
-                console.debug(status+";"+errorString)
-            }
-    }
+    // FluNetworkCallable{
+    //     id:callable
+    //     property bool silent: true
+    //     onStart: {
+    //         console.debug("satrt check update...")
+    //     }
+    //     onFinish: {
+    //         console.debug("check update finish")
+    //         FluEventBus.post("checkUpdateFinish");
+    //     }
+    //     onSuccess:
+    //         (result)=>{
+    //             var data = JSON.parse(result)
+    //             console.debug("current version "+AppInfo.version)
+    //             console.debug("new version "+data.tag_name)
+    //             if(data.tag_name !== AppInfo.version){
+    //                 dialog_update.newVerson =  data.tag_name
+    //                 dialog_update.body = data.body
+    //                 dialog_update.open()
+    //             }else{
+    //                 if(!silent){
+    //                     showInfo("当前版本已经是最新版")
+    //                 }
+    //             }
+    //         }
+    //     onError:
+    //         (status,errorString)=>{
+    //             if(!silent){
+    //                 showError("网络异常!")
+    //             }
+    //             console.debug(status+";"+errorString)
+    //         }
+    // }
 
-    function checkUpdate(silent){
-        callable.silent = silent
-        FluNetwork.get("https://api.github.com/repos/zhuzichu520/FluentUI/releases/latest")
-        .go(callable)
-    }
+    // function checkUpdate(silent){
+    //     callable.silent = silent
+    //     FluNetwork.get("https://api.github.com/repos/zhuzichu520/FluentUI/releases/latest")
+    //     .go(callable)
+    // }
 
 }

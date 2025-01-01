@@ -32,3 +32,6 @@ print(lanlist)
 for lan in lanlist:
     print(f"abbrev of {lan} :",getLanguageAbbrev(lan))
     print(f"direction of {lan} :",getLanguageDirection(lan))
+
+
+
