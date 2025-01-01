@@ -82,9 +82,7 @@ class StartUp:
         app.set_window_icon()
         app.set_up_contexts()
         app.set_up_signals()
-        app.set_up_window_event_filter()
         app.start_engine()
-        app.set_up_window_effects()
         app.verify()
 
         return app

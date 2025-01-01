@@ -31,10 +31,6 @@ class Application(QGuiApplication):
         super().__init__(args)
         self._engine = QQmlApplicationEngine()
         LanguageServer().init(self,self._engine)
-        # print(self._engine.uiLanguage())
-        # self._translator = QTranslator()
-        # self._translator_qt = QTranslator()
-
         self._event_filter = None
         self._effects = None
 
@@ -54,47 +50,9 @@ class Application(QGuiApplication):
     def _on_quit(self) -> None:
         del self._engine
 
-    def _retranslate(self):
-        pass
-        # locale = QLocale(self._engine.uiLanguage())
-
-        # # self.removeTranslator(self._translator_qt)
-        # self.removeTranslator(self._translator)
-
-        # # self._translator_qt.load(locale, "qtbase", "_", QLibraryInfo.location(QLibraryInfo.LibraryPath.TranslationsPath))
-        # self._translator.load(f"qrc:/i18n/{locale.name()}.qm")
-
-        # # self.installTranslator(self._translator_qt)
-        # self.installTranslator(self._translator)
-
-        # self.setLayoutDirection(locale.textDirection())
-
-    def set_up_window_event_filter(self):
-
-        pass
-        # if platform.system() == "Windows":
-        #     from app.framelesswindow.win import WindowsEventFilter
-        #     self._event_filter = WindowsEventFilter(border_width=5)
-        #     self.installNativeEventFilter(self._event_filter)
-        # elif platform.system() == "Linux":
-        #     from app.framelesswindow.linux import LinuxEventFilter
-        #     self._event_filter = LinuxEventFilter(border_width=5)
-        #     self.installEventFilter(self._event_filter)
-
     def start_engine(self):
-        # self._engine.load(QUrl.fromLocalFile(":/qt/qml/main.qml"))
-            
         qml_file = "qrc:/qml/App.qml"
         self._engine.load(qml_file)
-
-    def set_up_window_effects(self):
-        pass
-        # if sys.platform == "win32":
-        #     hwnd = self.topLevelWindows()[0].winId()
-        #     from app.framelesswindow.win import WindowsWindowEffect
-        #     self._effects = WindowsWindowEffect()
-        #     self._effects.addShadowEffect(hwnd)
-        #     self._effects.addWindowAnimation(hwnd)
 
     def verify(self):
         if not self._engine.rootObjects():
